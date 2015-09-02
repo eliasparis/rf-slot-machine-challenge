@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Slot ex</title>
+	
+	<style type="text/css">
+
+		#canvas1{
+			background-color: red;
+		}
+
+		#canvas2{
+			background-color: green;
+		}
+
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		window.onload = init;
+
+		var imgsrc = ['https://cdn4.iconfinder.com/data/icons/flat-icon-set/2133/flat_icons-graficheria.it-13.png','https://cdn0.iconfinder.com/data/icons/flat-designed-circle-icon/1000/mouse.png','http://www.myiconfinder.com/uploads/iconsets/256-256-5e2a8fe966bf6f56fc29234d1e5817b8.png','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVBbreDGAPsqFVGRHVjqofoA7hIJGmfQa0se2ON2_cCP19ZrV3'];
+
+		img = new Image();
+		img.src = imgsrc[0];
+		var y = 2;
+		var v = 3;
+
+		function draw(){
+			var canvas1 = document.getElementById('canvas1').getContext("2d");
+
+			canvas1.clearRect(0,0,200,400);
+
+			canvas1.save();
+
+			canvas1.drawImage(img,1,-150,150,150);
+			if(y > 400){
+				y = -150;
+			}else{
+				y += v;
+			};
+			canvas1.restore();
+
+			var canvas2 = document.getElementById('canvas2').getContext("2d");
+
+			window.requestAnimationFrame(draw);
+		}
+
+		function main(){
+			
+		}
+
+		function init() {
+			window.requestAnimationFrame(draw);
+		}
+
+		function update(){
+
+		}
+
+		init();
+		
+	</script>
+
+	<canvas id="canvas1" width="210px" height="400px">Get chrome</canvas>
+	<canvas id="canvas2" class="2" width="150px" height="400px">Get chrome</canvas>
+	
+</body>
+
+</html>
