@@ -16,64 +16,125 @@
 	</style>
 </head>
 <body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script type="text/javascript">
+		
+	//solving AnimationFrame
+		(function() {
+   			 var lastTime = 0;
+   			 var vendors = ['ms', 'moz', 'webkit', 'o'];
+   			 for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+   			     window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+   			     window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
+   			                                || window[vendors[x]+'CancelRequestAnimationFrame'];
+   			 }
+ 		
+ 		   		if (!window.requestAnimationFrame)
+ 		   		    window.requestAnimationFrame = function(callback, element) {
+ 		   		        var currTime = new Date().getTime();
+ 		   		        var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+ 		   		        var id = window.setTimeout(function() { callback(currTime + timeToCall); },
+ 		   		          timeToCall);
+ 		   		        lastTime = currTime + timeToCall;
+ 		   		        return id;
+ 		   		    };
+ 		
+ 		   		if (!window.cancelAnimationFrame)
+ 		   		    window.cancelAnimationFrame = function(id) {
+    		        clearTimeout(id);
+       		};
+		}());
+	//..................
+
 		window.onload = init;
 
-		var imgsrc = ['https://cdn4.iconfinder.com/data/icons/flat-icon-set/2133/flat_icons-graficheria.it-13.png','https://cdn0.iconfinder.com/data/icons/flat-designed-circle-icon/1000/mouse.png','http://www.myiconfinder.com/uploads/iconsets/256-256-5e2a8fe966bf6f56fc29234d1e5817b8.png','http://img09.deviantart.net/1da9/i/2012/206/4/f/watermelon_puke_rainbows_by_snowdrop_the_kitty-d58ku1w.png'];
+		var imgsrc = ['https://cdn4.iconfinder.com/data/icons/flat-icon-set/2133/flat_icons-graficheria.it-13.png','https://cdn0.iconfinder.com/data/icons/flat-designed-circle-icon/1000/mouse.png',
+		'http://www.myiconfinder.com/uploads/iconsets/256-256-5e2a8fe966bf6f56fc29234d1e5817b8.png',
+		'http://img09.deviantart.net/1da9/i/2012/206/4/f/watermelon_puke_rainbows_by_snowdrop_the_kitty-d58ku1w.png',
+		'http://www.idplabs.com/wp-content/uploads/2011/03/hospital-icon.png',
+		'http://www.plazaeventosbodas.com/images/icon-black-phone.png'];
 
-		var dist = [0,150,300,450,600]
+		var distA = [0,150,300,-150,-300,-450]
+		// var distB = [150,300,600,0,450]
+		// var distC = [0,150,300,450,600]
+		// var distD = [0,150,300,450,600]
+		// var distE = [0,150,300,450,600]
 
 		img1 = new Image();
 		img2 = new Image();
 		img3 = new Image();
 		img4 = new Image();
+		img5 = new Image();
+		img6 = new Image();
 
 		img1.src = imgsrc[0];
 		img2.src = imgsrc[1];
 		img3.src = imgsrc[2];
 		img4.src = imgsrc[3];
+		img5.src = imgsrc[4];
+		img6.src = imgsrc[5];
 
-		var size = 150; 
-		
+		var size = 150;
+		var animating1;
 
 		function draw(){
 			var canvas1 = document.getElementById('canvas1').getContext("2d");
 
 			canvas1.clearRect(0,0,200,450);
-
 			canvas1.save();
 
-			canvas1.drawImage(img1,0,dist[0],size,size);
-			canvas1.drawImage(img2,0,dist[1],size,size);
-			canvas1.drawImage(img3,0,dist[2],size,size);
-			canvas1.drawImage(img4,0,dist[3],size,size);
-
+			canvas1.drawImage(img1,0,distA[0],size,size);
+			canvas1.drawImage(img2,0,distA[1],size,size);
+			canvas1.drawImage(img3,0,distA[2],size,size);
+			canvas1.drawImage(img4,0,distA[3],size,size);
+			canvas1.drawImage(img5,0,distA[4],size,size);
+			canvas1.drawImage(img6,0,distA[5],size,size);
 			
-			for(var i = 0; i < dist.length; i++){
-				if (dist[i] > 450){
-					dist[i] = -150;
+			for(var i = 0; i < distA.length; i++){
+				if (distA[i] > 450){
+					distA[i] = -450;
 				}else{
-					dist[i] += 1;
+					distA[i] += 120;
 				}
 			}
 			
 			canvas1.restore();
 
-			var canvas2 = document.getElementById('canvas2').getContext("2d");
-
-			window.requestAnimationFrame(draw);
+			if ($('#canvas1').hasClass('working')) {
+				animating1 = window.requestAnimationFrame(draw);
+			};
 		}
 
 		function init() {
-			window.requestAnimationFrame(draw);
+			draw();
 		}
 
-		init();
+		function animating(){
+			animating1 = window.requestAnimationFrame(draw);
+			$('#canvas1').toggleClass('working');
+			setTimeout(stopAnimation, 2000);
+		}
+
+		function stopAnimation(){
+			$('#canvas1').removeClass('working');
+			cancelAnimationFrame(animating1);
+			
+			for(var i = 0; i < distA.length; i++){
+				coef = Math.round(distA[i]/150);
+				distA[i] += (150*coef)-distA[i];
+				console.log(distA[i])
+			}
+
+			init();
+		}
+
+		$(document).on('click','#play',animating);
 		
 	</script>
 
-	<canvas id="canvas1" width="180px" height="450px">Get chrome</canvas>
-	<canvas id="canvas2" class="2" width="180px" height="450px">Get chrome</canvas>
+	<canvas id="canvas1" width="180px" height="450px" >Get chrome</canvas>
+	<canvas id="canvas2" width="180px" height="450px">Get chrome</canvas>
+	<span id="play">PLAY</span>
 	
 </body>
 
