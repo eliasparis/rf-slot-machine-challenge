@@ -54,7 +54,7 @@
 		'http://www.idplabs.com/wp-content/uploads/2011/03/hospital-icon.png',
 		'http://www.plazaeventosbodas.com/images/icon-black-phone.png'];
 
-		var distA = [0,150,300,-150,-300,-450]
+		var distA = [0,150,300,450,600,-150]
 		// var distB = [150,300,600,0,450]
 		// var distC = [0,150,300,450,600]
 		// var distD = [0,150,300,450,600]
@@ -91,12 +91,14 @@
 			canvas1.drawImage(img6,0,distA[5],size,size);
 			
 			for(var i = 0; i < distA.length; i++){
-				if (distA[i] > 450){
-					distA[i] = -450;
+				if (distA[i] >= 751){
+					distA[i] = 0
 				}else{
-					distA[i] += 120;
+					distA[i] += 70;
 				}
 			}
+
+
 			
 			canvas1.restore();
 
@@ -112,7 +114,7 @@
 		function animating(){
 			animating1 = window.requestAnimationFrame(draw);
 			$('#canvas1').toggleClass('working');
-			setTimeout(stopAnimation, 2000);
+			setTimeout(stopAnimation, 2301);
 		}
 
 		function stopAnimation(){
@@ -120,9 +122,15 @@
 			cancelAnimationFrame(animating1);
 			
 			for(var i = 0; i < distA.length; i++){
+
+				coef2 = Math.round(distA[i-1]/150)
+				coef3 = Math.round(distA[i+1]/150)
 				coef = Math.round(distA[i]/150);
+
+				
+				
 				distA[i] += (150*coef)-distA[i];
-				console.log(distA[i])
+				console.log(distA[i]);
 			}
 
 			init();
