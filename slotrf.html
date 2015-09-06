@@ -54,8 +54,8 @@
 		'http://www.idplabs.com/wp-content/uploads/2011/03/hospital-icon.png',
 		'http://www.plazaeventosbodas.com/images/icon-black-phone.png'];
 
-		var distA = [0,150,300,450,600,-150]
-		// var distB = [150,300,600,0,450]
+		var distA = [0,150,300,450,600,-150];
+		var distB = [150,600,450,0,-150,300];
 		// var distC = [0,150,300,450,600]
 		// var distD = [0,150,300,450,600]
 		// var distE = [0,150,300,450,600]
@@ -98,8 +98,6 @@
 				}
 			}
 
-
-			
 			canvas1.restore();
 
 			if ($('#canvas1').hasClass('working')) {
@@ -114,7 +112,7 @@
 		function animating(){
 			animating1 = window.requestAnimationFrame(draw);
 			$('#canvas1').toggleClass('working');
-			setTimeout(stopAnimation, 2301);
+			setTimeout(stopAnimation, getTime());
 		}
 
 		function stopAnimation(){
@@ -134,6 +132,10 @@
 			}
 
 			init();
+		}
+
+		function getTime(){
+			Math.floor(Math.random()*3000)+2000;
 		}
 
 		$(document).on('click','#play',animating);
