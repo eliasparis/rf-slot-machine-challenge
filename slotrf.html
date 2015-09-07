@@ -6,20 +6,9 @@
 	<style type="text/css">
 
 		#canvas1{
-			background-color: red;
+			background-color: lightgray;
 		}
-		#canvas2{
-			background-color: green;
-		}
-		#canvas3{
-			background-color: red;
-		}
-		#canvas4{
-			background-color: green;
-		}
-		#canvas5{
-			background-color: gray;
-		}
+		
 	</style>
 </head>
 <body>
@@ -55,17 +44,21 @@
 
 		window.onload = init;
 
-		var imgsrc = ['https://cdn4.iconfinder.com/data/icons/flat-icon-set/2133/flat_icons-graficheria.it-13.png','https://cdn0.iconfinder.com/data/icons/flat-designed-circle-icon/1000/mouse.png',
-		'http://www.myiconfinder.com/uploads/iconsets/256-256-5e2a8fe966bf6f56fc29234d1e5817b8.png',
-		'http://img09.deviantart.net/1da9/i/2012/206/4/f/watermelon_puke_rainbows_by_snowdrop_the_kitty-d58ku1w.png',
-		'http://www.idplabs.com/wp-content/uploads/2011/03/hospital-icon.png',
-		'http://www.plazaeventosbodas.com/images/icon-black-phone.png'];
+		var imgsrc = ['img/1.png',
+						'img/2.png',
+						'img/3.png',
+						'img/4.png',
+						'img/5.png',
+						'img/6.png',
+						'img/7.png',
+						'img/8.png',
+						'img/9.png'];
 
-		var distA = [0,150,300,450,600,-150];
-		var distB = [150,600,450,0,-150,300];
-		var distC = [-150,450,0,300,600,150];
-		var distD = [600,-150,150,0,450,300];
-		var distE = [450,300,150,-150,0,600];
+		var distA = [0,120,240,360,480,600,720,840,-120];
+		var distB = [480,0,840,-120,240,120,720,600,360];
+		var distC = [120,840,600,360,0,720,-120,240,480];
+		var distD = [360,600,720,120,-120,240,840,0,480];
+		var distE = [840,240,480,0,120,360,600,720,-120];
 
 		img1 = new Image();
 		img2 = new Image();
@@ -73,6 +66,9 @@
 		img4 = new Image();
 		img5 = new Image();
 		img6 = new Image();
+		img7 = new Image();
+		img8 = new Image();
+		img9 = new Image();
 
 		img1.src = imgsrc[0];
 		img2.src = imgsrc[1];
@@ -80,22 +76,25 @@
 		img4.src = imgsrc[3];
 		img5.src = imgsrc[4];
 		img6.src = imgsrc[5];
+		img7.src = imgsrc[6];
+		img8.src = imgsrc[7];
+		img9.src = imgsrc[8];
 
-		var reel1 = 70;
-		var reel2 = 70;
-		var reel3 = 70;
-		var reel4 = 70;
-		var reel5 = 70;
+		var reel1 = 50;
+		var reel2 = 50;
+		var reel3 = 50;
+		var reel4 = 50;
+		var reel5 = 50;
 
-		var size = 150;
-		distLeft = 180;
+		var size = 120;
+		distLeft = 120;
 		var reels = 0; 
 		var animating1;
 
 		function draw1(){
 			var canvas1 = document.getElementById('canvas1').getContext("2d");
 
-			canvas1.clearRect(0,0,900,450);
+			canvas1.clearRect(0,0,600,360);
 			canvas1.save();
 
 			canvas1.drawImage(img1,distLeft*0,distA[0],size,size);
@@ -104,6 +103,9 @@
 			canvas1.drawImage(img4,distLeft*0,distA[3],size,size);
 			canvas1.drawImage(img5,distLeft*0,distA[4],size,size);
 			canvas1.drawImage(img6,distLeft*0,distA[5],size,size);
+			canvas1.drawImage(img7,distLeft*0,distA[6],size,size);
+			canvas1.drawImage(img8,distLeft*0,distA[7],size,size);
+			canvas1.drawImage(img9,distLeft*0,distA[8],size,size);
 
 			canvas1.drawImage(img1,distLeft*1,distB[0],size,size);
 			canvas1.drawImage(img2,distLeft*1,distB[1],size,size);
@@ -111,6 +113,10 @@
 			canvas1.drawImage(img4,distLeft*1,distB[3],size,size);
 			canvas1.drawImage(img5,distLeft*1,distB[4],size,size);
 			canvas1.drawImage(img6,distLeft*1,distB[5],size,size);
+			canvas1.drawImage(img7,distLeft*1,distB[6],size,size);
+			canvas1.drawImage(img8,distLeft*1,distB[7],size,size);
+			canvas1.drawImage(img9,distLeft*1,distB[8],size,size);
+
 
 			canvas1.drawImage(img1,distLeft*2,distC[0],size,size);
 			canvas1.drawImage(img2,distLeft*2,distC[1],size,size);
@@ -118,6 +124,9 @@
 			canvas1.drawImage(img4,distLeft*2,distC[3],size,size);
 			canvas1.drawImage(img5,distLeft*2,distC[4],size,size);
 			canvas1.drawImage(img6,distLeft*2,distC[5],size,size);
+			canvas1.drawImage(img7,distLeft*2,distC[6],size,size);
+			canvas1.drawImage(img8,distLeft*2,distC[7],size,size);
+			canvas1.drawImage(img9,distLeft*2,distC[8],size,size);
 
 			canvas1.drawImage(img1,distLeft*3,distD[0],size,size);
 			canvas1.drawImage(img2,distLeft*3,distD[1],size,size);
@@ -125,6 +134,9 @@
 			canvas1.drawImage(img4,distLeft*3,distD[3],size,size);
 			canvas1.drawImage(img5,distLeft*3,distD[4],size,size);
 			canvas1.drawImage(img6,distLeft*3,distD[5],size,size);
+			canvas1.drawImage(img7,distLeft*3,distD[6],size,size);
+			canvas1.drawImage(img8,distLeft*3,distD[7],size,size);
+			canvas1.drawImage(img9,distLeft*3,distD[8],size,size);
 
 			canvas1.drawImage(img1,distLeft*4,distE[0],size,size);
 			canvas1.drawImage(img2,distLeft*4,distE[1],size,size);
@@ -132,12 +144,15 @@
 			canvas1.drawImage(img4,distLeft*4,distE[3],size,size);
 			canvas1.drawImage(img5,distLeft*4,distE[4],size,size);
 			canvas1.drawImage(img6,distLeft*4,distE[5],size,size);
+			canvas1.drawImage(img7,distLeft*4,distE[6],size,size);
+			canvas1.drawImage(img8,distLeft*4,distE[7],size,size);
+			canvas1.drawImage(img9,distLeft*4,distE[8],size,size);
 			
 			update(distA,reel1);
 			update(distB,reel2);
 			update(distC,reel3);
 			update(distD,reel4);
-			update(distE, reel5);
+			update(distE,reel5);
 
 			canvas1.restore();
 			
@@ -148,22 +163,29 @@
 
 		function update(dist, reel){
 			for(var i = 0; i < dist.length; i++){
-				if (dist[i] >= 751){
-					dist[i] = 0
+				if (dist[i] >= 841){
+					dist[i] = -120
 				}else{
 					dist[i] += reel;
+					coef = Math.round(dist[i]/30);
+					dist[i] += (30*coef)-dist[i];
 				}
 			}
+		}
+
+		function correctPos(){
+			coef = Math.round(dist[i]/120);
+			dist[i] += (120*coef)-dist[i];
 		}
 
 		function init() {
 			draw1();
 			reels = 0;
-			reel1 = 70;
-			reel2 = 70;
-			reel3 = 70;
-			reel4 = 70;
-			reel5 = 70;
+			reel1 = 50;
+			reel2 = 50;
+			reel3 = 50;
+			reel4 = 50;
+			reel5 = 50;
 		}
 
 		function animating(){
@@ -174,8 +196,6 @@
 			setTimeout('stopAnimation3();', getTime());
 			setTimeout('stopAnimation4();', getTime());
 			setTimeout('stopAnimation5();', getTime());
-
-			console.log('click');
 		}
 
 		function doItWork(){
@@ -188,8 +208,8 @@
 			reel1 = 0;
 			reels ++;
 			for(var i = 0; i < distA.length; i++){
-				coef = Math.round(distA[i]/150);				
-				distA[i] += (150*coef)-distA[i];
+				coef = Math.round(distA[i]/120);
+				distA[i] += (120*coef)-distA[i];
 			}
 			reelsMotion();
 		}
@@ -198,8 +218,8 @@
 			reel2 = 0;
 			reels ++;
 			for(var i = 0; i < distB.length; i++){
-				coef = Math.round(distB[i]/150);				
-				distB[i] += (150*coef)-distB[i];
+				coef = Math.round(distB[i]/120);				
+				distB[i] += (120*coef)-distB[i];
 			}
 			reelsMotion();
 		}
@@ -208,8 +228,8 @@
 			reel3 = 0;
 			reels ++;
 			for(var i = 0; i < distC.length; i++){
-				coef = Math.round(distC[i]/150);				
-				distC[i] += (150*coef)-distC[i];
+				coef = Math.round(distC[i]/120);				
+				distC[i] += (120*coef)-distC[i];
 			}
 			reelsMotion();
 		}
@@ -218,8 +238,8 @@
 			reel4 = 0;
 			reels ++;
 			for(var i = 0; i < distD.length; i++){
-				coef = Math.round(distD[i]/150);				
-				distD[i] += (150*coef)-distD[i];
+				coef = Math.round(distD[i]/120);				
+				distD[i] += (120*coef)-distD[i];
 			}
 			reelsMotion();
 		}
@@ -228,8 +248,8 @@
 			reel5 = 0;
 			reels ++;
 			for(var i = 0; i < distE.length; i++){
-				coef = Math.round(distE[i]/150);				
-				distE[i] += (150*coef)-distE[i];
+				coef = Math.round(distE[i]/120);				
+				distE[i] += (120*coef)-distE[i];
 			}
 			reelsMotion();
 		}
@@ -243,14 +263,14 @@
 		}
 
 		function getTime(){
-			return Math.floor(Math.random()*2000)+1000;
+			return Math.floor(Math.random()*3000)+1000;
 		}
 
 		$(document).on('click','#play',animating);
 		
 	</script>
 
-	<canvas id="canvas1" width="900px" height="450px" >Get chrome</canvas>
+	<canvas id="canvas1" width="600px" height="360px" >Get chrome</canvas>
 	<span id="play">PLAY</span>
 	
 </body>
