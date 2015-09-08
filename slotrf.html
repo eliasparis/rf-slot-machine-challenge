@@ -2,40 +2,33 @@
 <html>
 <head>
 	<title>Slot ex</title>
-	
-	<style type="text/css">
-
-		#canvas1{
-			background-color: white;
-			border-radius: 10px;
-		}
-
-		#container{
-			margin-top: 50px;
-			height: 100%;
-			width: 600px;
-			position: absolute;
-  			left: 50%;
-			transform: translate(-50%);			
-		}
-
-		html { 
-			position: relative;
-		  background: url(img/bg.jpg) no-repeat center center fixed; 
-		  -webkit-background-size: cover;
-		  -moz-background-size: cover;
-		  -o-background-size: cover;
-		  background-size: cover;
-		}
-		
-	</style>
+	<link rel="stylesheet" type="text/css" href="slotrf.css">
 </head>
 <body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 	<script type="text/javascript" src="slotrf.js"> </script>
 	<div id="container">
 		<canvas id="canvas1" width="600px" height="360px" >Get chrome</canvas>
-		<div id="play">PLAY</div>	
+		<div class="btns">
+			<div class="cont">
+				<div>CREDIT</div>
+				<div id="credit">20000</div>
+			</div>
+			<div class="cont">
+				<div>BET:LINE</div>
+				<div><span id="minus">- </span><span id="betline">1</span><span id="plus"> +</span></div>
+			</div>
+			<div class="cont">
+				<div>BET</div>
+				<div id="bet">5</div>
+			</div>
+			<div class="cont">
+				<div id="play">
+					PLAY
+				</div>								
+			</div>
+		</div>
 	</div>
 	
 </body>

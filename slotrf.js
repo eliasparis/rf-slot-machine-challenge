@@ -74,6 +74,7 @@ distLeft = 120;
 var reels = 0; 
 var animating1;
 
+
 		function draw1(){
 			var canvas1 = document.getElementById('canvas1').getContext("2d");
 
@@ -174,13 +175,17 @@ function animating(){
 	setTimeout('stopAnimation3();', getTime());
 	setTimeout('stopAnimation4();', getTime());
 	setTimeout('stopAnimation5();', getTime());
+
+	credit -= bet;
+	$('#credit').text(credit);
+	$('#play').css('visibility', 'hidden');
 }
 
-		function doItWork(){
-			if ($('#canvas1').hasClass('working')) {
-				animating1 = window.requestAnimationFrame(draw1);
-			};
-		}
+function doItWork(){
+	if ($('#canvas1').hasClass('working')) {
+		animating1 = window.requestAnimationFrame(draw1);
+	};
+}
 
 function stopAnimation1(){
 	reel1 = 0;
@@ -236,8 +241,10 @@ function reelsMotion(){
 	if (reels === 5) {
 		$('#canvas1').toggleClass('working');
 		cancelAnimationFrame(animating1);
-		result();	
+		result();
+		$('#play').css('visibility', 'visible');	
 	};
+
 }
 
 function getTime(){
@@ -252,16 +259,23 @@ function result(){
 					for (var z = 0; z <= distE.length; z++) {
 						if (distA[z] === distB[z] && distC[z] === distD[z] && distE[z] === distA[z]){
 							if (distA[z] >= 0 && distA[z] <= 119) {
-								console.log('yes')
+								credit += bet*25;
+								$('#credit').text(credit);
 							}else if (distA[z] >= 120 && distA[z] <= 239) {
-								console.log('yes')
+								credit += bet*100;
+								$('#credit').text(credit);
 							}else if (distA[z] >= 240 && distA[z] <= 359) {
-								console.log('yes')
-							}else if (distA[z] >= 240 && distA[z] <= 359) {
+								credit += bet*25;
+								$('#credit').text(credit);
+							}else{};
 
-							};
+						}else if (distA[z] === 0 && distB[z] === 120 && distC[z] === 240 && distD[z] === 120 && distE[z] === 0){
+							credit += bet*75;
+							$('#credit').text(credit);
+						}else if (distA[z] === 240 && distB[z] === 120 && distC[z] === 0 && distD[z] === 120 && distE[z] === 240){
+							credit += bet*75;
+							$('#credit').text(credit);
 						}else{
-							console.log('nop')
 						};
 					};
 				};
@@ -272,5 +286,33 @@ function result(){
 	init();
 }
 
-$(document).on('click','#play',animating);
+$(document).on('click','#play',animating);	
+$(document).on('click','#plus',plusbet);
+$(document).on('click','#minus',minusbet);
+
+//--- beting logic
+
+var credit = 20000;
+var bet = 5;
+var betline = 1;
+
+function plusbet(){
+	if (bet != 50) {
+		betline++;
+		bet += 5;
+		$('#bet').text(bet);
+		$('#betline').text(betline);
+	};
+}
+
+function minusbet(){
+	if (bet != 5) {
+		bet -= 5;
+		betline--;
+		$('#bet').text(bet);
+		$('#betline').text(betline);
+	};
+}
+
+
 		
