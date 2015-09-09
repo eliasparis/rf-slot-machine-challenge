@@ -37,11 +37,11 @@ var imgsrc = ['img/1.png',
 				'img/8.png',
 				'img/9.png'];
 
-var distA = [120,0,240,360,480,600,720,840,-120];
-var distB = [600,720,840,-120,240,480,0,120,360];
+var distA = [0,120,240,360,480,600,720,840,-120];
+var distB = [0,720,840,-120,240,480,600,120,360];
 var distC = [0,840,600,360,120,720,-120,240,480];
-var distD = [-120,600,720,0,120,240,840,360,480];
-var distE = [360,240,480,840,0,120,600,720,-120];
+var distD = [0,600,720,-120,120,240,840,360,480];
+var distE = [0,240,480,840,360,120,600,720,-120];
 
 img1 = new Image();
 img2 = new Image();
@@ -80,7 +80,6 @@ var wspot2 = 0;
 var wspot3 = 0;
 var wspot4 = 0;
 var wspot5 = 0;
-
 
 		function draw1(){
 			var canvas1 = document.getElementById('canvas1').getContext("2d");
@@ -140,6 +139,7 @@ var wspot5 = 0;
 			canvas1.drawImage(img9,distLeft*4,distE[8],size,size);
 
 			if (winnner === true) {
+				canvas1.beginPath();
 				canvas1.moveTo(60, wspot1);
 				canvas1.lineTo(180, wspot2);
 				canvas1.lineTo(300, wspot3);
@@ -151,11 +151,20 @@ var wspot5 = 0;
     		  	canvas1.stroke();
 			};
 
-			update(distA,reel1);
-			update(distB,reel2);
-			update(distC,reel3);
-			update(distD,reel4);
-			update(distE,reel5);
+			if ($('#paytable').hasClass('on')) {
+				canvas1.beginPath();
+      			canvas1.rect(0, 0, 600, 360);
+      			canvas1.fillStyle = 'white';
+      			canvas1.fill();
+			}else if ($('#paytable').hasClass('after')) {
+
+			}else{
+				update(distA,reel1);
+				update(distB,reel2);
+				update(distC,reel3);
+				update(distD,reel4);
+				update(distE,reel5);
+			};
 
 			canvas1.restore();
 			
@@ -164,26 +173,36 @@ var wspot5 = 0;
 			};
 		}
 
-		function update(dist, reel){
-			for(var i = 0; i < dist.length; i++){
-				if (dist[i] >= 841){
-					dist[i] = -120
-				}else{
-					dist[i] += reel;
-					coef = Math.round(dist[i]/30);
-					dist[i] += (30*coef)-dist[i];
-				}
-			}
+function update(dist, reel){
+	for(var i = 0; i < dist.length; i++){
+		if (dist[i] >= 841){
+			dist[i] = -120
+		}else{
+			dist[i] += reel;
+			coef = Math.round(dist[i]/30);
+			dist[i] += (30*coef)-dist[i];
 		}
+	}
+}
 
 function init() {
 	draw1();
 	reels = 0;
-	reel1 = 45;
-	reel2 = 45;
-	reel3 = 45;
-	reel4 = 45;
-	reel5 = 45;
+
+	console.log(reel1);
+	// if ($('#paytable').hasClass('after')) {
+	// 	reel1 = 0;
+	// 	reel2 = 0;
+	// 	reel3 = 0;
+	// 	reel4 = 0;
+	// 	reel5 = 0;	
+	// }else{
+		reel1 = 45;
+		reel2 = 45;
+		reel3 = 45;
+		reel4 = 45;
+		reel5 = 45;
+	// };
 }
 
 function animating(){
@@ -198,6 +217,7 @@ function animating(){
 	credit -= bet;
 	$('#credit').text(credit);
 	$('#play').css('visibility', 'hidden');
+	$('#paytable').removeClass('after');
 
 	winnner = false;
 }
@@ -264,8 +284,8 @@ function reelsMotion(){
 		cancelAnimationFrame(animating1);
 		result();
 		playBtn();
+		$('#paytable').addClass('after');
 	};
-
 }
 
 function playBtn(){
@@ -273,6 +293,14 @@ function playBtn(){
 			$('#play').css('visibility', 'hidden');
 		}else{
 			$('#play').css('visibility', 'visible');				
+	};
+}
+
+function playPayAct(){
+	if ($('#paytable').hasClass('on')) {
+		$('#play').css('visibility', 'hidden');
+	}else{
+		$('#play').css('visibility', 'visible');		
 	};
 }
 
@@ -316,9 +344,9 @@ function result(){
 							credit += bet*75;
 							$('#credit').text(credit);
 							winnner = true
-							wspot1 = 60;
+							wspot1 = wspot5 = 300;
 							wspot2 = wspot4 = 180;
-							wspot3 = 300;
+							wspot3 = 60;
 
 						}else{
 						};
@@ -336,6 +364,7 @@ function drawPrizeData(where) {
 }
 
 $(document).on('click','#play',animating);	
+$(document).on('click','#paytable',showPayTable);	
 $(document).on('click','#plus',plusbet);
 $(document).on('click','#minus',minusbet);
 
@@ -353,6 +382,7 @@ function plusbet(){
 		$('#bet').text(bet);
 		$('#betline').text(betline);
 		playBtn();
+		playPayAct();
 	};
 }
 
@@ -364,7 +394,22 @@ function minusbet(){
 		$('#bet').text(bet);
 		$('#betline').text(betline);
 		playBtn();
+		playPayAct();
 	};
+}
+
+function showPayTable(){
+
+	$('#paytable').toggleClass('on');
+	$('#paytable').toggleClass('after');
+	playPayAct();
+	if ($('#paytable').hasClass('on')) {
+		$('#paytable').text('X');
+	}else{
+		$('#paytable').text('PAYTABLE');
+	};
+
+	init();
 }
 
 
