@@ -38,9 +38,9 @@ var imgsrc = ['img/1.png',
 				'img/9.png'];
 
 var distA = [0,120,240,360,480,600,720,840,-120];
-var distB = [0,720,840,-120,240,480,600,120,360];
-var distC = [0,840,600,360,120,720,-120,240,480];
-var distD = [0,600,720,-120,120,240,840,360,480];
+var distB = [480,720,840,-120,240,0,600,120,360];
+var distC = [360,840,600,0,120,720,-120,240,480];
+var distD = [120,600,720,-120,0,240,840,360,480];
 var distE = [0,240,480,840,360,120,600,720,-120];
 
 img1 = new Image();
@@ -86,6 +86,8 @@ var wspot5 = 0;
 
 			canvas1.clearRect(0,0,600,360);
 			canvas1.save();
+
+			
 
 			canvas1.drawImage(img1,distLeft*0,distA[0],size,size);
 			canvas1.drawImage(img2,distLeft*0,distA[1],size,size);
@@ -149,6 +151,7 @@ var wspot5 = 0;
     		  	canvas1.strokeStyle = '#00ffd5';
     		  	canvas1.lineCap = 'round';
     		  	canvas1.stroke();
+    		  	
 			};
 
 			if ($('#paytable').hasClass('on')) {
@@ -156,6 +159,16 @@ var wspot5 = 0;
       			canvas1.rect(0, 0, 600, 360);
       			canvas1.fillStyle = 'white';
       			canvas1.fill();
+
+      			canvas1.fillStyle = '#201835';
+      			canvas1.font = '18pt sans-serif';
+      			canvas1.fillText("Top Line    ->    x25", 140, 100);
+      			canvas1.fillText("Middle Line    ->    x100", 140, 130);
+      			canvas1.fillText("Lower Line    ->    x25", 140, 160);
+      			canvas1.fillText("Vee    ->    x75", 140, 190);
+      			canvas1.fillText("Inverted Vee    ->    x75", 140, 220);
+
+      			
 			}else if ($('#paytable').hasClass('after')) {
 
 			}else{
@@ -165,6 +178,8 @@ var wspot5 = 0;
 				update(distD,reel4);
 				update(distE,reel5);
 			};
+
+
 
 			canvas1.restore();
 			
@@ -188,21 +203,11 @@ function update(dist, reel){
 function init() {
 	draw1();
 	reels = 0;
-
-	console.log(reel1);
-	// if ($('#paytable').hasClass('after')) {
-	// 	reel1 = 0;
-	// 	reel2 = 0;
-	// 	reel3 = 0;
-	// 	reel4 = 0;
-	// 	reel5 = 0;	
-	// }else{
-		reel1 = 45;
-		reel2 = 45;
-		reel3 = 45;
-		reel4 = 45;
-		reel5 = 45;
-	// };
+	reel1 = 45;
+	reel2 = 45;
+	reel3 = 45;
+	reel4 = 45;
+	reel5 = 45;
 }
 
 function animating(){
@@ -220,6 +225,7 @@ function animating(){
 	$('#paytable').removeClass('after');
 
 	winnner = false;
+	soundplay.fadeIn(1);
 }
 
 function doItWork(){
@@ -235,6 +241,7 @@ function stopAnimation1(){
 		coef = Math.round(distA[i]/120);
 		distA[i] += (120*coef)-distA[i];
 	}
+	soundreel.play();
 	reelsMotion();
 }
 
@@ -245,6 +252,7 @@ function stopAnimation2(){
 		coef = Math.round(distB[i]/120);				
 		distB[i] += (120*coef)-distB[i];
 	}
+	soundreel.play();
 	reelsMotion();
 }
 
@@ -255,6 +263,7 @@ function stopAnimation3(){
 		coef = Math.round(distC[i]/120);				
 		distC[i] += (120*coef)-distC[i];
 	}
+	soundreel.play();
 	reelsMotion();
 }
 
@@ -265,6 +274,7 @@ function stopAnimation4(){
 		coef = Math.round(distD[i]/120);				
 		distD[i] += (120*coef)-distD[i];
 	}
+	soundreel.play();
 	reelsMotion();
 }
 
@@ -275,6 +285,7 @@ function stopAnimation5(){
 		coef = Math.round(distE[i]/120);				
 		distE[i] += (120*coef)-distE[i];
 	}
+	soundreel.play();
 	reelsMotion();
 }
 
@@ -285,6 +296,7 @@ function reelsMotion(){
 		result();
 		playBtn();
 		$('#paytable').addClass('after');
+		soundplay.fadeOut(0, 2000);
 	};
 }
 
@@ -408,9 +420,22 @@ function showPayTable(){
 	}else{
 		$('#paytable').text('PAYTABLE');
 	};
-
 	init();
 }
+
+//---- sound
+
+var soundplay = new Howl({
+  urls: ['http://beerpager.weebly.com/uploads/4/3/9/3/4393220/beerpager-casino-sound.mp3'],
+  loop: true
+})
+
+var soundreel = new Howl({
+  urls: ['http://www.flan4u.com/downloads/Wave-files/sound-effects/win.wav'],
+  loop: false,
+  volume: 0.3
+})
+
 
 
 		
