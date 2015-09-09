@@ -37,11 +37,11 @@ var imgsrc = ['img/1.png',
 				'img/8.png',
 				'img/9.png'];
 
-var distA = [0,120,240,360,480,600,720,840,-120];
-var distB = [120,0,840,-120,240,480,720,600,360];
-var distC = [240,840,600,360,120,720,-120,0,480];
-var distD = [120,600,720,0,-120,240,840,360,480];
-var distE = [0,240,480,840,120,360,600,720,-120];
+var distA = [120,0,240,360,480,600,720,840,-120];
+var distB = [600,720,840,-120,240,480,0,120,360];
+var distC = [0,840,600,360,120,720,-120,240,480];
+var distD = [-120,600,720,0,120,240,840,360,480];
+var distE = [360,240,480,840,0,120,600,720,-120];
 
 img1 = new Image();
 img2 = new Image();
@@ -63,16 +63,23 @@ img7.src = imgsrc[6];
 img8.src = imgsrc[7];
 img9.src = imgsrc[8];
 
-var reel1 = 0;
-var reel2 = 0;
-var reel3 = 0;
-var reel4 = 0;
-var reel5 = 0;
+var reel1 = 45;
+var reel2 = 45;
+var reel3 = 45;
+var reel4 = 45;
+var reel5 = 45;
 
 var size = 120;
 distLeft = 120;
 var reels = 0; 
 var animating1;
+var winnner = false;
+
+var wspot1 = 0;
+var wspot2 = 0;
+var wspot3 = 0;
+var wspot4 = 0;
+var wspot5 = 0;
 
 
 		function draw1(){
@@ -131,7 +138,19 @@ var animating1;
 			canvas1.drawImage(img7,distLeft*4,distE[6],size,size);
 			canvas1.drawImage(img8,distLeft*4,distE[7],size,size);
 			canvas1.drawImage(img9,distLeft*4,distE[8],size,size);
-			
+
+			if (winnner === true) {
+				canvas1.moveTo(60, wspot1);
+				canvas1.lineTo(180, wspot2);
+				canvas1.lineTo(300, wspot3);
+				canvas1.lineTo(420, wspot4);
+				canvas1.lineTo(540, wspot5);
+				canvas1.lineWidth = 15;
+    		  	canvas1.strokeStyle = '#00ffd5';
+    		  	canvas1.lineCap = 'round';
+    		  	canvas1.stroke();
+			};
+
 			update(distA,reel1);
 			update(distB,reel2);
 			update(distC,reel3);
@@ -160,11 +179,11 @@ var animating1;
 function init() {
 	draw1();
 	reels = 0;
-	reel1 = 0;
-	reel2 = 0;
-	reel3 = 0;
-	reel4 = 0;
-	reel5 = 0;
+	reel1 = 45;
+	reel2 = 45;
+	reel3 = 45;
+	reel4 = 45;
+	reel5 = 45;
 }
 
 function animating(){
@@ -179,6 +198,8 @@ function animating(){
 	credit -= bet;
 	$('#credit').text(credit);
 	$('#play').css('visibility', 'hidden');
+
+	winnner = false;
 }
 
 function doItWork(){
@@ -242,9 +263,17 @@ function reelsMotion(){
 		$('#canvas1').toggleClass('working');
 		cancelAnimationFrame(animating1);
 		result();
-		$('#play').css('visibility', 'visible');	
+		playBtn();
 	};
 
+}
+
+function playBtn(){
+	if (credit < bet) {
+			$('#play').css('visibility', 'hidden');
+		}else{
+			$('#play').css('visibility', 'visible');				
+	};
 }
 
 function getTime(){
@@ -261,20 +290,36 @@ function result(){
 							if (distA[z] >= 0 && distA[z] <= 119) {
 								credit += bet*25;
 								$('#credit').text(credit);
+								winnner = true
+								drawPrizeData(60);
 							}else if (distA[z] >= 120 && distA[z] <= 239) {
 								credit += bet*100;
 								$('#credit').text(credit);
+								winnner = true
+								drawPrizeData(180);
 							}else if (distA[z] >= 240 && distA[z] <= 359) {
 								credit += bet*25;
 								$('#credit').text(credit);
+								winnner = true
+								drawPrizeData(300);
 							}else{};
 
 						}else if (distA[z] === 0 && distB[z] === 120 && distC[z] === 240 && distD[z] === 120 && distE[z] === 0){
 							credit += bet*75;
 							$('#credit').text(credit);
+							winnner = true
+							wspot1 = wspot5 = 60;
+							wspot2 = wspot4 = 180;
+							wspot3 = 300;
+
 						}else if (distA[z] === 240 && distB[z] === 120 && distC[z] === 0 && distD[z] === 120 && distE[z] === 240){
 							credit += bet*75;
 							$('#credit').text(credit);
+							winnner = true
+							wspot1 = 60;
+							wspot2 = wspot4 = 180;
+							wspot3 = 300;
+
 						}else{
 						};
 					};
@@ -284,6 +329,10 @@ function result(){
 	};
 
 	init();
+}
+
+function drawPrizeData(where) {
+	wspot1 = wspot2 = wspot3 = wspot4 = wspot5 = where;
 }
 
 $(document).on('click','#play',animating);	
@@ -297,20 +346,24 @@ var bet = 5;
 var betline = 1;
 
 function plusbet(){
+	playBtn();
 	if (bet != 50) {
 		betline++;
 		bet += 5;
 		$('#bet').text(bet);
 		$('#betline').text(betline);
+		playBtn();
 	};
 }
 
 function minusbet(){
+	playBtn();
 	if (bet != 5) {
 		bet -= 5;
 		betline--;
 		$('#bet').text(bet);
 		$('#betline').text(betline);
+		playBtn();
 	};
 }
 
