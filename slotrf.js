@@ -225,7 +225,8 @@ function animating(){
 	$('#paytable').removeClass('after');
 
 	winnner = false;
-	soundplay.fadeIn(1);
+
+	soundplay.play();
 }
 
 function doItWork(){
@@ -296,7 +297,6 @@ function reelsMotion(){
 		result();
 		playBtn();
 		$('#paytable').addClass('after');
-		soundplay.fadeOut(0, 2000);
 	};
 }
 
@@ -426,8 +426,7 @@ function showPayTable(){
 //---- sound
 
 var soundplay = new Howl({
-  urls: ['http://beerpager.weebly.com/uploads/4/3/9/3/4393220/beerpager-casino-sound.mp3'],
-  loop: true
+  urls: ['sounds/one.wav'],
 })
 
 var soundreel = new Howl({
